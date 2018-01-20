@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div id="svg" class="svg"></div>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -84,11 +85,35 @@
 </template>
 
 <script>
+import Test from '../assets/scripts/Test'
+import Pie from '../assets/scripts/charts/Pie'
+
 export default {
   name: 'HelloWorld',
+  mounted () {
+    const self = this
+    self.drawSvg()
+    self.drawPie()
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    drawSvg () {
+      const test = new Test('.svg')
+      test.render()
+    },
+    drawPie () {
+      const data = [
+        { name: 'Sarah', value: 2502 },
+        { name: 'Emma', value: 2005 },
+        { name: 'Laura', value: 1968 },
+        { name: 'Chloé', value: 1863 }
+      ]
+      const pie = new Pie('.svg')
+      pie.render(data)
     }
   }
 }
