@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <div id="svg" class="svg"></div>
+    <div id="cnmap" class="cnmap"></div>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -87,6 +88,7 @@
 <script>
 import Test from '../assets/scripts/Test'
 import Pie from '../assets/scripts/charts/Pie'
+import CnMap from '../assets/scripts/charts/chinaMap2'
 
 export default {
   name: 'HelloWorld',
@@ -94,10 +96,23 @@ export default {
     const self = this
     self.drawSvg()
     self.drawPie()
+    self.drawMap()
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      company: [
+        {name: '广西', value: 1872},
+        {name: '北京', value: 1684},
+        {name: '浙江', value: 1536},
+        {name: '广东', value: 1524},
+        {name: '上海', value: 1173},
+        {name: '江苏', value: 1118},
+        {name: '山东', value: 625},
+        {name: '云南', value: 612},
+        {name: '湖北', value: 331},
+        {name: '安徽', value: 284}
+      ]
     }
   },
   methods: {
@@ -114,6 +129,19 @@ export default {
       ]
       const pie = new Pie('.svg')
       pie.render(data)
+    },
+    drawMap () {
+      console.log('wywy')
+      let i = 0
+      for (i < 99; i++;) {
+        setTimeout(function () {
+          console.log(i)
+        })
+      }
+      const dataurl = '../static/data/china.topojson'
+      const arrColor = ['#79ba5e', '#8dd16d', '#b2e690', '#d8f1a2', '#e7f7c5']
+      const cnMap = new CnMap('.cnmap', this.company)
+      cnMap.render('.cnmap', dataurl, arrColor)
     }
   }
 }
