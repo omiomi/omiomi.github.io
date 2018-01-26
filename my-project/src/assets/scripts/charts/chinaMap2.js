@@ -25,24 +25,26 @@ export default class CnMap {
    *  @param    {Array}  data    原始数据
    *  @return   {Array}  dataset 转换后的数据
    */
-  render (selector, dataurl, arrColor) {
+  render (selector, dataurl, arrColor, southchinasea) {
     const {width, height} = this.defaultSetting()
+    const color = d3.scaleOrdinal()
+      .range(arrColor)
+    const svg = d3.select(selector)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height)
 
-    d3.xml('csv/southchinasea.svg', function(error, xmlDocument) {
-      svg.html(function(d){
-        return d3.select(this).html() + xmlDocument.getElementsByTagName("g")[0].outerHTML;
-      });
-      var gSouthSea = d3.select("#southsea");
-      gSouthSea.attr("transform","translate(540,410)scale(0.5)")
-        .style("fill", function(d){
-          return color(d);
-        })
-        .style("stroke", function(d){
-          return color(d);
-        })
-        .style("stroke-width", "1")
-        .attr("class","southsea");
-    });
+    d3.xml(southchinasea, function (xmlDocument) {
+      svg.html(function () {
+        return d3.select(this).html() + xmlDocument.getElementsByTagName('g')[0].outerHTML
+      })
+      d3.select('#southsea')
+        .attr('transform', 'translate(800,500)scale(0.5)')
+        .style('fill', d => color(d))
+        .style('stroke', d => color(d))
+        .style('stroke-width', '1')
+        .style('fill-opacity', 0.5)
+    })
     d3.json(dataurl, function (toporoot) {
       const dataset = topojson.feature(toporoot, toporoot.objects.china)
       const projection = d3.geoMercator()
@@ -51,14 +53,8 @@ export default class CnMap {
         .translate([width / 2, height / 2])
       const path = d3.geoPath()
         .projection(projection)
-      const color = d3.scaleOrdinal()
-        .range(arrColor)
 
-      d3.select(selector)
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
+      svg.append('g')
         .selectAll('path')
         .data(dataset.features)
         .enter()
@@ -77,7 +73,7 @@ export default class CnMap {
         })
         .on('mouseout', function () {
           d3.select(this)
-            .style('fill-opacity', 0.6)
+            .style('fill-opacity', 0.5)
         })
     })
   }

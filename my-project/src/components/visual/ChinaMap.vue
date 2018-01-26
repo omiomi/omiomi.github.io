@@ -43,7 +43,7 @@ export default {
       const southchinasea = '../static/data/southchinasea.svg'
       const arrColor = ['#79ba5e', '#8dd16d', '#b2e690', '#d8f1a2', '#e7f7c5']
       const cnMap = new CnMap('.cnmap', this.company)
-      cnMap.render('.cnmap', dataurl, arrColor)
+      cnMap.render('.cnmap', dataurl, arrColor, southchinasea)
     }
   }
 }
