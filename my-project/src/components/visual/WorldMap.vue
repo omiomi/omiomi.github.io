@@ -1,14 +1,14 @@
 <template>
-  <div class="chinamap">
-    <div id="cnmap" class="cnmap"></div>
+  <div class="worldmap">
+    <div id="wmap" class="wmap"></div>
   </div>
 </template>
 
 <script>
-import CnMap from '@/assets/scripts/charts/chinaMap2'
+import CnMap from '@/assets/scripts/charts/worldMap'
 
 export default {
-  name: 'ChinaMap',
+  name: 'WorldMap',
   mounted () {
     const self = this
     self.drawMap()
@@ -39,11 +39,10 @@ export default {
           console.log(i)
         })
       }
-      const dataurl = '../static/data/china.topojson'
-      const southchinasea = '../static/data/southchinasea.svg'
+      const dataurl = '../static/data/world.topojson'
       const arrColor = ['#79ba5e', '#8dd16d', '#b2e690', '#d8f1a2', '#e7f7c5']
-      const cnMap = new CnMap('.cnmap', this.company)
-      cnMap.render('.cnmap', dataurl, arrColor, southchinasea, this.company)
+      const cnMap = new CnMap('.wmap', this.company)
+      cnMap.render('.wmap', dataurl, arrColor, this.company)
     }
   }
 }
